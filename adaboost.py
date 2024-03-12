@@ -172,8 +172,6 @@ class Adaboost:
         idx = np.argmin(errors)
         bestError = errors[idx]
         bestClf = classifiers[idx]
-
-        # raise NotImplementedError("To be implemented")
         # End your code (Part 2)
         return bestClf, bestError
 

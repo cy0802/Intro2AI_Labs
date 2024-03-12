@@ -31,19 +31,17 @@ def detect(dataPath, clf):
       for i in range(int(num_box)):
         line_idx += 1
         box = lines[line_idx].split(" ")
-        print(box)
+        # print(box)
         x, y, w, h = int(box[0]), int(box[1]), int(box[2]), int(box[3])
         face = img[y:y+h, x:x+w]
         face = cv2.resize(face, (19, 19))
         face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
         if clf.classify(face):
-          cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2)
+          cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 5)
         else:
-          cv2.rectangle(img, (x, y), (x+w, y+h), (0, 0, 255), 2)
+          cv2.rectangle(img, (x, y), (x+w, y+h), (0, 0, 255), 5)
       img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
       plt.imshow(img)
       plt.show()
       line_idx += 1
-
-    # raise NotImplementedError("To be implemented")
     # End your code (Part 4)

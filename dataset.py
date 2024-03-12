@@ -98,7 +98,6 @@ def load_data_FDDB(data_idx="01"):
         # print(face_box_list)
         for i in range(num_faces):
             # Begin your code (Part 1-2)
-            # raise NotImplementedError("To be implemented")
             coord = []
             while True:
                 coord1 = (np.random.randint(0, img_gray.shape[1]-40), np.random.randint(0, img_gray.shape[0]-40))
@@ -111,11 +110,11 @@ def load_data_FDDB(data_idx="01"):
                 if not overlap_flag:
                     coord = [coord1, coord2]
                     break
-            # End your code (Part 1-2)
             # print(f"non-face: {coord}")
             img_crop = img_gray[coord[0][1]:coord[1][1], coord[0][0]:coord[1][0]].copy()
             # print(img_crop.shape)
             nonface_dataset.append((img_crop, 0))
+            # End your code (Part 1-2)
 
         # cv2.imshow("windows", img_gray)
         # cv2.waitKey(0)

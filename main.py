@@ -38,7 +38,7 @@ def main(args):
     # Part 3: Modify difference values at parameter T of the Adaboost algorithm.
     # And find better results. Please test value 1~10 at least.
     # print('Start training your classifier')
-    clf = adaboost.Adaboost(T=10)
+    clf = adaboost.Adaboost(T=1)
     clf.train(trainData)
 
     clf.save('clf_200_1_10')
@@ -56,7 +56,7 @@ def main(args):
 
     # Part 5: Test classifier on your own images
     print('\nDetect faces on your own images')
-    detection.detect('data/detect/yourOwnImages.txt', clf)
+    detection.detect('data/detect/myData.txt', clf)
 
 
 if __name__ == "__main__":
