@@ -18,7 +18,15 @@ def load_data_small():
     """
 
     # Begin your code (Part 1-1)
-    raise NotImplementedError("To be implemented")
+    print("load_data_small()")
+    dataset = []
+    path = [("data/data_small/test/face/", 1), ("data/data_small/test/non-face/", 0), 
+                ("data/data_small/train/face/", 1), ("data/data_small/train/non-face/", 1)]
+    for i in range(len(path)):
+        files = os.listdir(path[i][0])
+        for file in files:
+            img = cv2.imread(path[i][0] + file, cv2.IMREAD_GRAYSCALE)
+            dataset.append((img, path[i][1]))
     # End your code (Part 1-1)
     
     return dataset
@@ -26,7 +34,7 @@ def load_data_small():
 
 def load_data_FDDB(data_idx="01"):
     """
-        This function generates the training and testing dataset  form the path: 'data/data_small'.
+        This function generates the training and testing dataset form the path: 'data/data_small'.
         The dataset is a list of tuples where the first element is the numpy array of shape (m, n)
         representing the image the second element is its classification (1 or 0).
         
@@ -56,7 +64,9 @@ def load_data_FDDB(data_idx="01"):
     # Iterate through the .txt file
     # The detail .txt file structure can be seen in the README at https://vis-www.cs.umass.edu/fddb/
     while line_idx < len(line_list):
+        # read a image
         img_gray = cv2.imread(os.path.join("data/data_FDDB", line_list[line_idx] + ".jpg"), cv2.IMREAD_GRAYSCALE)
+        # print(f"image: {line_list[line_idx]}, shape: {img_gray.shape}")
         num_faces = int(line_list[line_idx + 1])
 
         # Crop face region using the ground truth label
@@ -81,17 +91,33 @@ def load_data_FDDB(data_idx="01"):
         # Random crop N non-face region
         # Here we set N equal to the number of faces to generate a balanced dataset
         # Note that we have alreadly save the bounding box of faces into `face_box_list`, you can utilize it for non-face region cropping
+        # print(face_box_list)
         for i in range(num_faces):
             # Begin your code (Part 1-2)
-            raise NotImplementedError("To be implemented")
+            # raise NotImplementedError("To be implemented")
+            coord = []
+            while True:
+                coord1 = (np.random.randint(0, img_gray.shape[1]-40), np.random.randint(0, img_gray.shape[0]-40))
+                coord2 = (coord1[0] + 19, coord1[1] + 19)
+                overlap_flag = False
+                for box in face_box_list:
+                    if overlap(box, (coord1, coord2)):
+                        overlap_flag = True
+                        break
+                if not overlap_flag:
+                    coord = [coord1, coord2]
+                    break
             # End your code (Part 1-2)
-
-            nonface_dataset.append((cv2.resize(img_crop, (19, 19)), 0))
+            # print(f"non-face: {coord}")
+            img_crop = img_gray[coord[0][1]:coord[1][1], coord[0][0]:coord[1][0]].copy()
+            # print(img_crop.shape)
+            nonface_dataset.append((img_crop, 0))
 
         # cv2.imshow("windows", img_gray)
         # cv2.waitKey(0)
 
     # train test split
+    print("face_dataset: ", len(face_dataset), "\nnonface_dataset: ", len(nonface_dataset))
     num_face_data, num_nonface_data = len(face_dataset), len(nonface_dataset)
     SPLIT_RATIO = 0.7
 
@@ -100,9 +126,22 @@ def load_data_FDDB(data_idx="01"):
 
     return train_dataset, test_dataset
 
+def overlap(rect1, rect2):
+    # rect = [(left_top_x, left_top_y), (right_bottom_x, right_bottom_y)]
+    corner = [(rect1[0][0], rect1[0][1]), (rect1[0][0], rect1[1][0]), 
+                (rect1[1][0], rect1[0][1]), (rect1[1][0], rect1[1][1])]
+    for point in corner:
+        if rect2[0][0] <= point[0] and point[0] <= rect2[1][0] and \
+            rect2[0][1] <= point[1] and point[1] <= rect2[1][1]:
+            return True
+    return False
 
 def create_dataset(data_type):
     if data_type == "small":
         return load_data_small()
     else:
         return load_data_FDDB()
+
+if __name__ == "__main__":
+    train, test = load_data_FDDB()
+    print(len(train), len(test))
