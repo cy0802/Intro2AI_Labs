@@ -19,14 +19,18 @@ def load_data_small():
 
     # Begin your code (Part 1-1)
     print("load_data_small()")
-    dataset = []
+    train_dataset, test_dataset = [], []
     path = [("data/data_small/test/face/", 1), ("data/data_small/test/non-face/", 0), 
-                ("data/data_small/train/face/", 1), ("data/data_small/train/non-face/", 1)]
+                ("data/data_small/train/face/", 1), ("data/data_small/train/non-face/", 0)]
     for i in range(len(path)):
         files = os.listdir(path[i][0])
         for file in files:
             img = cv2.imread(path[i][0] + file, cv2.IMREAD_GRAYSCALE)
-            dataset.append((img, path[i][1]))
+            if i < 2:
+                test_dataset.append((img, path[i][1]))
+            else:
+                train_dataset.append((img, path[i][1]))
+    dataset = (train_dataset, test_dataset)
     # End your code (Part 1-1)
     
     return dataset

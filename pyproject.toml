@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "hw1"
+version = "0.1.0"
+description = ""
+authors = ["cy0802 <amyyoyo0802@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+scikit-learn = "^1.4.1.post1"
+opencv-python-headless = "^4.9.0.80"
+tqdm = "^4.66.2"
+matplotlib = "^3.8.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

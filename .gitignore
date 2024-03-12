@@ -1,2 +1,6 @@
 data/
 *.pdf
+test.*
+__pycache__/
+*.pkl
+.venv/

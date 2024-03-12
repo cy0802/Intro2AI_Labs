@@ -2,6 +2,8 @@ import dataset
 import adaboost
 import utils
 import detection
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import argparse
 

@@ -161,7 +161,19 @@ class Adaboost:
             bestError: The error of the best classifer
         """
         # Begin your code (Part 2)
-        raise NotImplementedError("To be implemented")
+        classifiers = [WeakClassifier(feature) for feature in features]
+        classify_result = np.zeros(featureVals.shape)
+        # print(classify_result.shape)
+        errors = np.zeros(len(classifiers))
+        for i in range(len(classifiers)):
+            for j in range(featureVals.shape[1]):
+                classify_result[i, j] = classifiers[i].classify(iis[j])
+                errors[i] += abs(classify_result[i, j] - labels[j]) * weights[j]
+        idx = np.argmin(errors)
+        bestError = errors[idx]
+        bestClf = classifiers[idx]
+
+        # raise NotImplementedError("To be implemented")
         # End your code (Part 2)
         return bestClf, bestError
 
