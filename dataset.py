@@ -1,6 +1,7 @@
 import os
 import cv2
 import glob
+import time
 import numpy as np
 
 def load_data_small():
@@ -60,7 +61,7 @@ def load_data_FDDB(data_idx="01"):
         line_list = [line.rstrip() for line in file]
 
     # Set random seed for reproducing same image croping results
-    np.random.seed(0)
+    np.random.seed(int(time.time()))
 
     face_dataset, nonface_dataset = [], []
     line_idx = 0
