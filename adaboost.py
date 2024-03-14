@@ -161,6 +161,13 @@ class Adaboost:
             bestError: The error of the best classifer
         """
         # Begin your code (Part 2)
+        """
+            To choose the best classifier, the following steps are implemented:
+            1. Create a list of WeakClassifier objects with respect to the features.
+            2. For each classifier, calculate the error 
+                by calling the `classify` member function for each integral image and taking sum.
+            3. Select the classifier with the minimum error.
+        """
         classifiers = [WeakClassifier(feature) for feature in features]
         classify_result = np.zeros(featureVals.shape)
         # print(classify_result.shape)

@@ -20,6 +20,12 @@ def detect(dataPath, clf):
         No returns.
     """
     # Begin your code (Part 4)
+    """
+      First, I extract the txt file at the `dataPath` and get the information of images and the position of face area.
+      For each image, I read the image, crop the face area, and resize the face area to 19 x 19.
+      For each face area, I pass it to the `clf.classify` function to get the result.
+      If the result is True, I draw a green box on the image; otherwise, draw a red box on the image.
+    """
     with open(dataPath, "r") as file:
       raw_data = file.read()
     lines = raw_data.split("\n")

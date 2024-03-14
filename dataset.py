@@ -19,6 +19,13 @@ def load_data_small():
     """
 
     # Begin your code (Part 1-1)
+    """
+        This function is to load the training and testing dataset from the path: 'data/data_small'.
+        the `path` variable is a list of tuple where the first element is the path of the image, 
+        and the second element is the label of the image. 
+        For each path, I use `os.listdir` to get all the files in the directory, 
+        use `cv2.imread` to read the image and append it into either training or testing dataset.
+    """
     print("load_data_small()")
     train_dataset, test_dataset = [], []
     path = [("data/data_small/test/face/", 1), ("data/data_small/test/non-face/", 0), 
@@ -99,6 +106,14 @@ def load_data_FDDB(data_idx="01"):
         # print(face_box_list)
         for i in range(num_faces):
             # Begin your code (Part 1-2)
+            """
+                To randomly choose a non-face region, I do the following steps:
+                1. Randomly choose a coordinate (x, y) in the image
+                2. Check if the coordinate is overlap with any face region
+                   (The `overlap` function is implemented to check if two rectangles are overlap or not.)
+                3. If not, crop the region and append it into the nonface_dataset. 
+                   Otherwise, go back to step 1.
+            """
             coord = []
             while True:
                 coord1 = (np.random.randint(0, img_gray.shape[1]-40), np.random.randint(0, img_gray.shape[0]-40))
