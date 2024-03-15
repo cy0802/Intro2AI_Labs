@@ -1,7 +1,9 @@
 data/
 *.pdf
+*.docx
 test.*
 __pycache__/
 *.pkl
 .venv/
 experiment.xlsx
+*.zip
